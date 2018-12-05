@@ -7,7 +7,6 @@ namespace ReproApp
     using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
-    using Dapper;
     using Microsoft.Azure.ServiceBus;
     using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Management;
@@ -69,10 +68,14 @@ namespace ReproApp
             {
                 using (var connection = new SqlConnection(sqlConnectionString))
                 {
-                    await connection.OpenAsync();
+                    var command = new SqlCommand("INSERT INTO Test (Stamp) Values (@Stamp)");
+                    command.Parameters.AddWithValue("@Stamp", DateTime.Now);
+                    command.Connection = connection;
 
-                    var affectedRows = await connection.ExecuteAsync("INSERT INTO Test (Stamp) Values (@Stamp)", new { Stamp = DateTime.Now });
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync();
                 }
+
                 scope.Complete();
             }
         }

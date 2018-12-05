@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp2.2</TargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup Label="Transitive dependencies">
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.2.0" />
-    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
